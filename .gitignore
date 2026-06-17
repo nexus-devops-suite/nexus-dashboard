@@ -1,0 +1,38 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Go binaries and DB
+/go-api-gateway/gateway
+/go-api-gateway/gateway.exe
+/go-api-gateway/gateway_test.exe
+/go-api-gateway/nexus.db
+/go-api-gateway/tmp/
+
+# Rust build artifacts
+target/
+**/target/
+
