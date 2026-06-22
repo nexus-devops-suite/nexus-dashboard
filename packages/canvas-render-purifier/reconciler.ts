@@ -2,6 +2,82 @@ import Reconciler from 'react-reconciler';
 import { DefaultEventPriority } from 'react-reconciler/constants';
 import { SceneNode } from './scene-graph';
 
+let wasmEngine: any = null;
+try {
+  const { LayoutEngine } = require('./pkg/crp_layout_engine.js');
+  wasmEngine = new LayoutEngine();
+} catch (e) {
+  // Graceful fallback
+}
+
+function buildLayoutInput(node: SceneNode): any {
+  return {
+    id: node.id,
+    flex_direction: node.props.style?.flexDirection || 'column',
+    justify_content: node.props.style?.justifyContent || 'flex-start',
+    align_items: node.props.style?.alignItems || 'flex-start',
+    width: typeof node.props.style?.width === 'number' ? node.props.style.width : undefined,
+    height: typeof node.props.style?.height === 'number' ? node.props.style.height : undefined,
+    padding: node.props.style?.padding || 0,
+    margin: node.props.style?.margin || 0,
+    children: node.children.map(buildLayoutInput),
+  };
+}
+
+function applyLayoutResult(node: SceneNode, result: any) {
+  if (!result || node.id !== result.id) return;
+  node.x = result.x || 0;
+  node.y = result.y || 0;
+  node.width = result.width || 0;
+  node.height = result.height || 0;
+  
+  for (let i = 0; i < node.children.length; i++) {
+    if (result.children && result.children[i]) {
+      applyLayoutResult(node.children[i], result.children[i]);
+    }
+  }
+}
+
+function computeFallbackLayout(node: SceneNode, parentWidth: number = 1024, parentHeight: number = 768) {
+  const style = node.props.style;
+  const width = typeof style?.width === 'number' ? style.width : parentWidth;
+  const height = typeof style?.height === 'number' ? style.height : parentHeight;
+  
+  node.width = width;
+  node.height = height;
+
+  let currentY = style?.padding || 0;
+  let currentX = style?.padding || 0;
+
+  for (const child of node.children) {
+    if (style?.flexDirection === 'row') {
+      computeFallbackLayout(child, width, height);
+      child.x = currentX;
+      child.y = style?.padding || 0;
+      currentX += child.width + (style?.margin || 0);
+    } else {
+      computeFallbackLayout(child, width, height);
+      child.x = style?.padding || 0;
+      child.y = currentY;
+      currentY += child.height + (style?.margin || 0);
+    }
+  }
+}
+
+export function computeLayout(root: SceneNode) {
+  if (wasmEngine && typeof wasmEngine.compute_layout === 'function') {
+    try {
+      const input = buildLayoutInput(root);
+      const output = wasmEngine.compute_layout(input);
+      applyLayoutResult(root, output);
+      return;
+    } catch (e) {
+      console.warn("WASM layout calculation failed, falling back to pure TS layout", e);
+    }
+  }
+  computeFallbackLayout(root, root.width || 1024, root.height || 768);
+}
+
 const hostConfig: Reconciler.HostConfig<
   string,       // Type
   any,          // Props
@@ -63,8 +139,10 @@ const hostConfig: Reconciler.HostConfig<
     return null;
   },
 
-  resetAfterCommit() {
-    // No-op
+  resetAfterCommit(containerInfo) {
+    if (containerInfo instanceof SceneNode) {
+      computeLayout(containerInfo);
+    }
   },
 
   appendChild(parentInstance, child) {

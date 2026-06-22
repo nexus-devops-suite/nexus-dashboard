@@ -37,7 +37,7 @@ export default function SecurityAlerts() {
     let ws: WebSocket | null = null;
     
     const connectWS = () => {
-      ws = new WebSocket('ws://localhost:8080/ws');
+      ws = new WebSocket('ws://localhost:7860/ws');
       ws.onmessage = (event) => {
         try {
           const payload = JSON.parse(event.data);

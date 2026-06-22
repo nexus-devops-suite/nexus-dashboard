@@ -25,7 +25,7 @@ export default function PatchApprovals() {
   // Fetch and update approvals from live API Gateway WebSockets
   React.useEffect(() => {
     // 1. Fetch initial pending approvals from database
-    fetch('http://localhost:8080/api/patch/history', {
+    fetch('http://localhost:7860/api/patch/history', {
       headers: {
         'Authorization': 'Bearer tok_developer_key_mock_123'
       }
@@ -55,7 +55,7 @@ export default function PatchApprovals() {
     // 2. Connect WebSocket listener for pending admin authorizations
     let ws: WebSocket | null = null;
     const connectWS = () => {
-      ws = new WebSocket('ws://localhost:8080/ws');
+      ws = new WebSocket('ws://localhost:7860/ws');
       ws.onmessage = (event) => {
         try {
           const payload = JSON.parse(event.data);

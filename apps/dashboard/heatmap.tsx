@@ -25,7 +25,7 @@ export default function MemoryHeatmap() {
     let fallbackInterval: NodeJS.Timeout | null = null;
 
     const connectWS = () => {
-      ws = new WebSocket('ws://localhost:8080/ws');
+      ws = new WebSocket('ws://localhost:7860/ws');
       
       ws.onmessage = (event) => {
         try {

@@ -52,8 +52,12 @@ func main() {
 		log.Println("Database: Connecting to production PostgreSQL database...")
 		db, err = gorm.Open(postgres.Open(dbURL), &gorm.Config{})
 	} else {
-		log.Println("Database: DATABASE_URL not detected. Falling back to local SQLite database (/tmp/nexus.db)...")
-		db, err = gorm.Open(sqlite.Open("/tmp/nexus.db"), &gorm.Config{})
+		dbPath := "/tmp/nexus.db"
+		if os.PathSeparator == '\\' {
+			dbPath = "nexus.db"
+		}
+		log.Printf("Database: DATABASE_URL not detected. Falling back to local SQLite database (%s)...\n", dbPath)
+		db, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	}
 	if err != nil {
 		log.Fatalf("Failed to initialize GORM database connection: %v", err)

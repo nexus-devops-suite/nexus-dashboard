@@ -220,9 +220,9 @@ export default function PerfConsole() {
       <header className="border-b border-gray-900 bg-[#0f111a]/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <a href="/dashboard" className="text-gray-400 hover:text-white transition-colors flex items-center gap-1">
-              <ArrowLeft size={16} />
-              <span className="text-xs">Console</span>
+            <a href="/dashboard" className="text-gray-400 hover:text-[#66fcf1] transition-colors flex items-center gap-1.5">
+              <ArrowLeft size={14} />
+              <span className="text-xs font-semibold">Back to Control Plane</span>
             </a>
             <div className="h-4 w-px bg-gray-800" />
             <div className="flex items-center gap-2">

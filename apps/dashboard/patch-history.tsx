@@ -43,7 +43,7 @@ export default function PatchHistory() {
   // Fetch from API Gateway and subscribe to live patch rollouts
   React.useEffect(() => {
     // 1. Fetch historical database records
-    fetch('http://localhost:8080/api/patch/history', {
+    fetch('http://localhost:7860/api/patch/history', {
       headers: {
         'Authorization': 'Bearer tok_developer_key_mock_123'
       }
@@ -72,7 +72,7 @@ export default function PatchHistory() {
     // 2. Connect live WebSocket listener for real-time patch logs
     let ws: WebSocket | null = null;
     const connectWS = () => {
-      ws = new WebSocket('ws://localhost:8080/ws');
+      ws = new WebSocket('ws://localhost:7860/ws');
       ws.onmessage = (event) => {
         try {
           const payload = JSON.parse(event.data);

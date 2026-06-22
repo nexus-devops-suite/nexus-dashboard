@@ -60,7 +60,7 @@ export default function MarketingPricing() {
     setCheckoutStep('processing');
     
     // Call the real API Gateway registration service
-    fetch('http://localhost:8080/api/org/register', {
+    fetch('http://localhost:7860/api/org/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
