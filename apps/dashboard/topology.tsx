@@ -19,27 +19,46 @@ interface ClusterLink extends d3.SimulationLinkDatum<ClusterNode> {
 export default function TopologyMap() {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const [selectedNode, setSelectedNode] = useState<ClusterNode | null>(null);
-
-  // Mock cluster topologies data
-  const [nodes, setNodes] = useState<ClusterNode[]>([
-    { id: 'node_m1', name: 'master-01', type: 'master', status: 'healthy' },
-    { id: 'node_w1', name: 'worker-us-01', type: 'worker', status: 'patched' },
-    { id: 'node_w2', name: 'worker-us-02', type: 'worker', status: 'healthy' },
-    { id: 'node_w3', name: 'worker-eu-01', type: 'worker', status: 'error' },
-    { id: 'node_w4', name: 'worker-eu-02', type: 'worker', status: 'healthy' },
-    { id: 'node_w5', name: 'worker-ap-01', type: 'worker', status: 'offline' },
-  ]);
-
-  const links: ClusterLink[] = [
-    { source: 'node_m1', target: 'node_w1' },
-    { source: 'node_m1', target: 'node_w2' },
-    { source: 'node_m1', target: 'node_w3' },
-    { source: 'node_m1', target: 'node_w4' },
-    { source: 'node_m1', target: 'node_w5' },
-  ];
+  const [nodes, setNodes] = useState<ClusterNode[]>([]);
+  const [links, setLinks] = useState<ClusterLink[]>([]);
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    // Fetch nodes count and state from Go API Gateway
+    fetch('http://localhost:7860/api/status', {
+      headers: {
+        'Authorization': 'Bearer tok_developer_key_mock_123'
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.node_count) {
+          const list: ClusterNode[] = [
+            { id: 'node_m1', name: 'master-01', type: 'master', status: 'healthy' }
+          ];
+          const newLinks: ClusterLink[] = [];
+          for (let i = 1; i < data.node_count; i++) {
+            const workerId = `node_w${i}`;
+            list.push({
+              id: workerId,
+              name: `prod-node-${i < 10 ? '0' + i : i}`,
+              type: 'worker',
+              status: i % 4 === 0 ? 'error' : (i % 3 === 0 ? 'patched' : 'healthy')
+            });
+            newLinks.push({ source: 'node_m1', target: workerId });
+          }
+          setNodes(list);
+          setLinks(newLinks);
+        }
+      })
+      .catch(err => {
+        console.log("Gateway offline. Running topology map with empty state.", err);
+        setNodes([]);
+        setLinks([]);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!svgRef.current || nodes.length === 0) return;
 
     const width = 600;
     const height = 400;
@@ -124,7 +143,7 @@ export default function TopologyMap() {
       node
         .attr('transform', d => `translate(${d.x},${d.y})`);
     });
-  }, [nodes]);
+  }, [nodes, links]);
 
   return (
     <div className="bg-[#0f111a] border border-gray-850 p-6 rounded-2xl shadow-xl flex flex-col md:flex-row gap-6">

@@ -12,15 +12,7 @@ interface PendingPatch {
 }
 
 export default function PatchApprovals() {
-  const [pending, setPending] = useState<PendingPatch[]>([
-    {
-      id: 'pat_1f8a',
-      developer: 'Bob Jones (SecOps)',
-      targetFn: 'payment.process_checkout',
-      riskScore: 82,
-      linesModified: 14
-    }
-  ]);
+  const [pending, setPending] = useState<PendingPatch[]>([]);
 
   // Fetch and update approvals from live API Gateway WebSockets
   React.useEffect(() => {

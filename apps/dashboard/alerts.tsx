@@ -11,26 +11,7 @@ interface SystemAlert {
 }
 
 export default function SecurityAlerts() {
-  const [alerts, setAlerts] = useState<SystemAlert[]>([
-    {
-      id: 'al_1',
-      level: 'CRITICAL',
-      message: 'Hooking collision detected in target address offset 0x7fffb8a1c900. Automated rollback executed successfully in <3ms.',
-      timestamp: '2026-06-15 14:12:00'
-    },
-    {
-      id: 'al_2',
-      level: 'WARNING',
-      message: 'High execution workload (98%) on hot-patched function: auth.validate_token.',
-      timestamp: '2026-06-15 14:05:12'
-    },
-    {
-      id: 'al_3',
-      level: 'RESOLVED',
-      message: 'Self-monitoring node check completed. Daemon state is synchronized with cluster quorum.',
-      timestamp: '2026-06-15 13:00:00'
-    }
-  ]);
+  const [alerts, setAlerts] = useState<SystemAlert[]>([]);
 
   // Connect to live WebSocket security feed
   React.useEffect(() => {

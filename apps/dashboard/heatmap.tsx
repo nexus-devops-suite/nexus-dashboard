@@ -11,13 +11,7 @@ interface MemorySegment {
 }
 
 export default function MemoryHeatmap() {
-  const [segments, setSegments] = useState<MemorySegment[]>([
-    { region: '.text', load: 12, pages_rw: 4, executions: 420 },
-    { region: '.data', load: 45, pages_rw: 8, executions: 120 },
-    { region: '.rodata', load: 5, pages_rw: 1, executions: 0 },
-    { region: 'stack', load: 82, pages_rw: 16, executions: 980 },
-    { region: 'heap', load: 60, pages_rw: 32, executions: 1450 }
-  ]);
+  const [segments, setSegments] = useState<MemorySegment[]>([]);
 
   // Connect to live API Gateway websocket telemetry
   useEffect(() => {
@@ -89,33 +83,39 @@ export default function MemoryHeatmap() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {segments.map((seg, idx) => {
-          // Heatmap color map
-          let heatColor = 'bg-blue-950/40 text-blue-400 border-blue-900/30';
-          if (seg.load > 80) heatColor = 'bg-red-950/40 text-red-400 border-red-900/30';
-          else if (seg.load > 50) heatColor = 'bg-yellow-950/40 text-yellow-400 border-yellow-900/30';
-          else if (seg.load > 20) heatColor = 'bg-green-950/40 text-green-400 border-green-900/30';
+      {segments.length === 0 ? (
+        <div className="text-center py-12 text-xs text-gray-500 italic">
+          No live memory segments reported. Attach daemon to start streaming telemetry.
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {segments.map((seg, idx) => {
+            // Heatmap color map
+            let heatColor = 'bg-blue-950/40 text-blue-400 border-blue-900/30';
+            if (seg.load > 80) heatColor = 'bg-red-950/40 text-red-400 border-red-900/30';
+            else if (seg.load > 50) heatColor = 'bg-yellow-950/40 text-yellow-400 border-yellow-900/30';
+            else if (seg.load > 20) heatColor = 'bg-green-950/40 text-green-400 border-green-900/30';
 
-          return (
-            <div
-              key={idx}
-              className={`border p-4 rounded-xl flex flex-col justify-between h-32 transition-all hover:scale-[1.02] ${heatColor}`}
-            >
-              <div>
-                <div className="font-bold text-sm tracking-wide">{seg.region}</div>
-                <div className="text-[10px] opacity-75 mt-0.5">Pages RW: {seg.pages_rw}</div>
-              </div>
-              <div className="mt-4">
-                <div className="text-2xl font-extrabold">{Math.round(seg.load)}%</div>
-                <div className="text-[9px] opacity-75 uppercase tracking-wider font-mono">
-                  Execs: {seg.executions}/s
+            return (
+              <div
+                key={idx}
+                className={`border p-4 rounded-xl flex flex-col justify-between h-32 transition-all hover:scale-[1.02] ${heatColor}`}
+              >
+                <div>
+                  <div className="font-bold text-sm tracking-wide">{seg.region}</div>
+                  <div className="text-[10px] opacity-75 mt-0.5">Pages RW: {seg.pages_rw}</div>
+                </div>
+                <div className="mt-4">
+                  <div className="text-2xl font-extrabold">{Math.round(seg.load)}%</div>
+                  <div className="text-[9px] opacity-75 uppercase tracking-wider font-mono">
+                    Execs: {seg.executions}/s
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

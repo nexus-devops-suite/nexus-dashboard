@@ -13,32 +13,7 @@ interface PatchLog {
 }
 
 export default function PatchHistory() {
-  const [patches, setPatches] = useState<PatchLog[]>([
-    {
-      id: 'pat_098f',
-      developer: 'Alice Smith (DevOps)',
-      targetFn: 'auth.validate_token',
-      riskScore: 24,
-      status: 'active',
-      timestamp: '2026-06-15 14:10:05'
-    },
-    {
-      id: 'pat_1f8a',
-      developer: 'Bob Jones (SecOps)',
-      targetFn: 'payment.process_checkout',
-      riskScore: 82,
-      status: 'pending',
-      timestamp: '2026-06-15 13:54:12'
-    },
-    {
-      id: 'pat_2b8c',
-      developer: 'Charlie Brown (Core Eng)',
-      targetFn: 'router.route_request',
-      riskScore: 12,
-      status: 'rolled_back',
-      timestamp: '2026-06-15 11:22:45'
-    }
-  ]);
+  const [patches, setPatches] = useState<PatchLog[]>([]);
 
   // Fetch from API Gateway and subscribe to live patch rollouts
   React.useEffect(() => {
@@ -169,6 +144,13 @@ export default function PatchHistory() {
                 </td>
               </tr>
             ))}
+            {patches.length === 0 && (
+              <tr>
+                <td colSpan={7} className="py-8 text-center text-gray-500 italic">
+                  No active patch records found. Apply your first patch utilizing the CLI tool.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -106,8 +106,34 @@ export default function MarketingPricing() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0c10] text-[#c5c6c7] py-20 px-6 font-sans">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-[#0b0c10] text-[#c5c6c7] font-sans selection:bg-[#66fcf1] selection:text-black">
+      {/* Header */}
+      <header className="border-b border-gray-900 bg-[#0b0c10]/80 backdrop-blur-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-2">
+              <div className="h-9 w-9 bg-gradient-to-tr from-[#66fcf1] to-[#45f3ff] rounded-lg flex items-center justify-center text-black font-bold text-lg shadow-[0_0_15px_rgba(102,252,241,0.2)]">
+                N
+              </div>
+              <span className="text-white font-bold tracking-tight text-xl">NEXUS</span>
+            </a>
+          </div>
+          <nav className="hidden md:flex items-center gap-8 text-sm">
+            <a href="/#features" className="hover:text-white transition-colors">Features</a>
+            <a href="/#playground" className="hover:text-white transition-colors">Live CLI Playground</a>
+            <a href="/pricing" className="hover:text-white transition-colors font-semibold text-[#66fcf1]">Pricing</a>
+          </nav>
+          <a
+            href="/dashboard"
+            className="bg-[#1f2833] text-white hover:text-[#66fcf1] px-4 py-2 rounded-lg text-sm border border-gray-800 transition-all flex items-center gap-1.5"
+          >
+            <span>Launch Dashboard</span>
+            <ArrowRight size={14} />
+          </a>
+        </div>
+      </header>
+
+      <div className="max-w-6xl mx-auto py-20 px-6">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight mb-4">
             Predictable Plans for Any Infrastructure
@@ -200,6 +226,45 @@ export default function MarketingPricing() {
             <span>PCI-DSS Compliant</span>
           </div>
         </div>
+
+        {/* Footer */}
+        <footer className="border-t border-gray-900 bg-[#0f111a] py-12 px-6 text-xs text-gray-500 mt-20 rounded-2xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <div className="space-y-4">
+              <h4 className="text-white font-bold tracking-wider uppercase text-[10px]">Products</h4>
+              <ul className="space-y-2 font-mono text-[11px]">
+                <li><a href="/dashboard" className="hover:text-white transition-colors">Hot-Swap Daemon</a></li>
+                <li><a href="/dashboard/perf" className="hover:text-white transition-colors">Canvas-Render Purifier</a></li>
+                <li><a href="/dashboard" className="hover:text-white transition-colors">AI Safety Oracle</a></li>
+                <li><a href="/dashboard" className="hover:text-white transition-colors">Daemon Mesh Gossip</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-white font-bold tracking-wider uppercase text-[10px]">Developer Guides</h4>
+              <ul className="space-y-2 font-mono text-[11px]">
+                <li><a href="/onboarding/setup" className="hover:text-white transition-colors">Kubernetes Deployment</a></li>
+                <li><a href="/onboarding/setup" className="hover:text-white transition-colors">Docker Compose Integration</a></li>
+                <li><a href="/onboarding/setup" className="hover:text-white transition-colors">Developer CLI Tools</a></li>
+                <li><a href="/pricing" className="hover:text-[#66fcf1] transition-colors font-semibold">Paddle Pricing Plans</a></li>
+              </ul>
+            </div>
+            <div className="space-y-4 col-span-2">
+              <h4 className="text-white font-bold tracking-wider uppercase text-[10px]">Confidentiality & Compliance</h4>
+              <p className="leading-relaxed text-gray-600 max-w-sm">
+                NEXUS DevOps Suite Version 1.0 — Confidential & Proprietary. B2B Enterprise SaaS infrastructure compliance guidelines enforced via ED25519 payload signatures and CAP_SYS_PTRACE system credentials.
+              </p>
+            </div>
+          </div>
+          <div className="border-t border-gray-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-6 bg-gradient-to-tr from-[#66fcf1] to-[#45f3ff] rounded flex items-center justify-center text-black font-bold text-xs">
+                N
+              </div>
+              <span className="text-white font-bold text-sm tracking-tight">NEXUS DEVOPS SUITE</span>
+            </div>
+            <p className="text-center sm:text-right">&copy; {new Date().getFullYear()} Nexus DevOps Suite. Open-source under MIT License.</p>
+          </div>
+        </footer>
       </div>
 
       {/* Interactive Checkout Modal (Paddle Simulator) */}

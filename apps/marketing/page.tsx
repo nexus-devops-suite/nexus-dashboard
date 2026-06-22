@@ -286,8 +286,42 @@ export default function MarketingLandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-950 py-8 bg-[#0b0c10] text-center text-xs text-gray-600">
-        &copy; {new Date().getFullYear()} Nexus DevOps Suite. Open-source under MIT License.
+      <footer className="border-t border-gray-900 bg-[#0f111a] py-16 px-6 text-xs text-gray-500">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div className="space-y-4">
+            <h4 className="text-white font-bold tracking-wider uppercase text-[10px]">Products</h4>
+            <ul className="space-y-2">
+              <li><a href="/dashboard" className="hover:text-white transition-colors">Hot-Swap Daemon</a></li>
+              <li><a href="/dashboard/perf" className="hover:text-white transition-colors">Canvas-Render Purifier</a></li>
+              <li><a href="/dashboard" className="hover:text-white transition-colors">AI Safety Oracle</a></li>
+              <li><a href="/dashboard" className="hover:text-white transition-colors">Daemon Mesh Gossip</a></li>
+            </ul>
+          </div>
+          <div className="space-y-4">
+            <h4 className="text-white font-bold tracking-wider uppercase text-[10px]">Developer Guides</h4>
+            <ul className="space-y-2">
+              <li><a href="/onboarding/setup" className="hover:text-white transition-colors">Kubernetes Deployment</a></li>
+              <li><a href="/onboarding/setup" className="hover:text-white transition-colors">Docker Compose Integration</a></li>
+              <li><a href="/onboarding/setup" className="hover:text-white transition-colors">Developer CLI Tools</a></li>
+              <li><a href="/pricing" className="hover:text-[#66fcf1] transition-colors font-semibold">Paddle Pricing Plans</a></li>
+            </ul>
+          </div>
+          <div className="space-y-4 col-span-2">
+            <h4 className="text-white font-bold tracking-wider uppercase text-[10px]">Confidentiality & Compliance</h4>
+            <p className="leading-relaxed text-gray-600 max-w-sm">
+              NEXUS DevOps Suite Version 1.0 — Confidential & Proprietary. B2B Enterprise SaaS infrastructure compliance guidelines enforced via ED25519 payload signatures and CAP_SYS_PTRACE system credentials.
+            </p>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto border-t border-gray-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <div className="h-6 w-6 bg-gradient-to-tr from-[#66fcf1] to-[#45f3ff] rounded flex items-center justify-center text-black font-bold text-xs">
+              N
+            </div>
+            <span className="text-white font-bold text-sm tracking-tight">NEXUS DEVOPS SUITE</span>
+          </div>
+          <p className="text-center sm:text-right">&copy; {new Date().getFullYear()} Nexus DevOps Suite. Open-source under MIT License.</p>
+        </div>
       </footer>
     </div>
   );
