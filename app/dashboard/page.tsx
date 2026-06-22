@@ -340,15 +340,54 @@ export default function DashboardConsole() {
                 </div>
               </div>
 
+              {/* Interactive workspace entry columns */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-[#0f111a] border border-gray-850 p-5 rounded-2xl space-y-3 flex flex-col justify-between">
+                  <div>
+                    <div className="h-8 w-8 rounded-lg bg-blue-950/40 text-blue-400 border border-blue-900 flex items-center justify-center mb-3">
+                      <BarChart2 size={16} />
+                    </div>
+                    <h3 className="text-white font-bold text-sm">Scroll Benchmarks</h3>
+                    <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
+                      Compare WebGL shaders rendering 20,000 telemetry rows at 144 FPS side-by-side with a standard React DOM table to see frame drops and memory spikes.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0f111a] border border-gray-850 p-5 rounded-2xl space-y-3 flex flex-col justify-between">
+                  <div>
+                    <div className="h-8 w-8 rounded-lg bg-green-950/40 text-green-400 border border-green-900 flex items-center justify-center mb-3">
+                      <Code size={16} />
+                    </div>
+                    <h3 className="text-white font-bold text-sm">Visual Playground</h3>
+                    <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
+                      Design nodes with padding/margin sliders, inspect layout boundaries calculated using the Taffy layout engine, and preview compiled JSX and AST JSON.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="bg-[#0f111a] border border-gray-850 p-5 rounded-2xl space-y-3 flex flex-col justify-between">
+                  <div>
+                    <div className="h-8 w-8 rounded-lg bg-[#1f2833] text-[#66fcf1] border border-gray-800 flex items-center justify-center mb-3">
+                      <BookOpen size={16} />
+                    </div>
+                    <h3 className="text-white font-bold text-sm">Developer Guide</h3>
+                    <p className="text-[11px] text-gray-500 leading-relaxed mt-1">
+                      Access a step-by-step onboarding walkthrough covering npm packages configuration, reconciler initialization, and synthetic events mapping.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Launcher block */}
               <div className="bg-gradient-to-tr from-[#151824] to-[#1f2833] border border-gray-800 p-8 rounded-2xl text-center space-y-6 shadow-2xl relative overflow-hidden">
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#66fcf1]/5 rounded-full blur-2xl pointer-events-none" />
                 
-                <h3 className="text-xl font-bold text-white tracking-tight">
-                  WebGL 10,000+ Row Live Grid Benchmark
+                <h3 className="text-lg font-bold text-white tracking-tight">
+                  Launch the Canvas-Render Purifier Compiler Hub
                 </h3>
                 <p className="text-xs text-gray-400 max-w-xl mx-auto leading-relaxed">
-                  Interact directly with a 10,000-row telemetry data table compiled into WebGL shaders and drawn on a single DOM canvas. Test scrolling performance and telemetry inspector streams.
+                  Open the fully integrated compiler workspace to test scroll metrics, customize nodes layouts, and copy production-ready SDK snippets.
                 </p>
 
                 <div>
@@ -356,7 +395,7 @@ export default function DashboardConsole() {
                     href="/dashboard/perf"
                     className="inline-flex items-center gap-2 bg-gradient-to-r from-[#66fcf1] to-[#45f3ff] text-black font-extrabold px-6 py-3 rounded-xl shadow-[0_0_15px_rgba(102,252,241,0.2)] hover:opacity-95 transition-all text-xs"
                   >
-                    <span>Launch Purifier Live Canvas Grid</span>
+                    <span>Open Purifier Workspace</span>
                     <ArrowRight size={14} />
                   </a>
                 </div>
